@@ -7,7 +7,8 @@
     "start": "nuxt start",
     "test": "jest",
     "test:watch": "jest --watchAll",
-    "test:single": "jest -t"
+    "e2e": "cypress",
+    "e2e:open": "cypress open"
   },
   "dependencies": {
     "nuxt": "^2.14.6"
@@ -21,6 +22,7 @@
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.3.0",
+    "cypress": "^5.3.0",
     "eslint": "^7.10.0",
     "eslint-plugin-cypress": "^2.11.2",
     "eslint-plugin-import": "^2.22.1",
