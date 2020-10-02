@@ -11,6 +11,7 @@
     "e2e:open": "cypress open"
   },
   "dependencies": {
+    "@nuxtjs/composition-api": "^0.12.5",
     "nuxt": "^2.14.6"
   },
   "devDependencies": {

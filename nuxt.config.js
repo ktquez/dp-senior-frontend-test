@@ -25,7 +25,9 @@ export default {
    */
   buildModules: [
     // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
-    '@nuxtjs/tailwindcss'
+    '@nuxtjs/tailwindcss',
+    // Doc: https://composition-api.nuxtjs.org/
+    '@nuxtjs/composition-api'
   ],
 
   /*

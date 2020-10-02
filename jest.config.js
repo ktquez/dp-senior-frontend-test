@@ -1,6 +1,7 @@
 module.exports = {
   moduleNameMapper: {
-    '^@/(.*)$': './$1'
+    '^@/(.*)$': './$1',
+    '@nuxtjs/composition-api': '@nuxtjs/composition-api/lib/cjs/entrypoint.js'
   },
   moduleFileExtensions: ['js', 'vue'],
   testMatch: [
