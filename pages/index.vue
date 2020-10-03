@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, useAsync } from '@nuxtjs/composition-api'
 
 import useOffices from '@/composables/useOffices'
 
@@ -65,9 +65,11 @@ export default defineComponent({
 
   setup () {
     const heading = 'Offices'
-    const { offices, fetch } = useOffices()
-
-    fetch(7)
+    const offices = useAsync(async () => {
+      const { offices, fetch } = await useOffices()
+      await fetch(7)
+      return offices.value
+    })
 
     return { heading, offices }
   }
