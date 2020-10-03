@@ -1,8 +1,10 @@
 import faker from 'faker'
 
-const colors = ['bg-accent-blue', 'bg-accent-red', 'bg-accent-yellow']
+let id = 1
+const colors = ['bg-accent-blue', 'bg-accent-red', 'bg-accent-yellow', 'bg-primary-gray', 'bg-primary-darkBlue']
 
 const officeSchema = {
+  id: () => id,
   title: () => (faker.fake('{{company.companyName}}')),
   address: () => (faker.fake('{{address.streetAddress}}')),
   fullName: () => (faker.fake('{{name.findName}}')),
@@ -20,6 +22,7 @@ export default function makeOffices (numberItems = 10) {
       Object.keys(officeSchema).forEach(prop => {
         office[prop] = officeSchema[prop]()
       })
+      ++id
       return office
     })
 }
