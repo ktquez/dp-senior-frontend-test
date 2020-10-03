@@ -1,6 +1,6 @@
 module.exports = {
   moduleNameMapper: {
-    '^@/(.*)$': './$1',
+    '^@/(.*)$': '<rootDir>/$1',
     '@nuxtjs/composition-api': '@nuxtjs/composition-api/lib/cjs/entrypoint.js'
   },
   moduleFileExtensions: ['js', 'vue'],
@@ -16,7 +16,7 @@ module.exports = {
   ],
   snapshotSerializers: ['jest-serializer-vue'],
   coverageReporters: ['html', 'text-summary'],
-  coverageDirectory: './tests/unit/coverage',
+  coverageDirectory: '<rootDir>/tests/unit/coverage',
   collectCoverageFrom: [
     'components/**/*.vue',
     'pages/**/*.vue',
