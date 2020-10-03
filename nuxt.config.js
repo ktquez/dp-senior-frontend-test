@@ -37,7 +37,7 @@ export default {
    * Nuxt.js modules
    */
   modules: [
-    // Dox: https://github.com/nuxt-community/svg-sprite-module
+    // Doc: https://github.com/nuxt-community/svg-sprite-module
     '@nuxtjs/svg-sprite'
   ],
 
