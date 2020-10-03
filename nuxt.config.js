@@ -4,6 +4,9 @@ export default {
    * Headers of the page
    */
   head: {
+    htmlAttrs: {
+      lang: 'en'
+    },
     title: process.env.npm_package_name || '',
     meta: [
       { charset: 'utf-8' },
@@ -33,7 +36,10 @@ export default {
   /*
    * Nuxt.js modules
    */
-  modules: [],
+  modules: [
+    // Dox: https://github.com/nuxt-community/svg-sprite-module
+    '@nuxtjs/svg-sprite'
+  ],
 
   /*
    * Build configuration
