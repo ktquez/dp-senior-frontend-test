@@ -3,7 +3,7 @@
     <WrapperCard
       ref="headerCard"
       data-test="officeCard"
-      class="flex items-center justify-between px-6 py-10 rounded-md hover:shadow-focus focus-within:shadow-focus"
+      class="flex items-center justify-between px-6 py-10 text-black rounded-md hover:shadow-focus focus-within:shadow-focus"
       :class="office.color"
       :style="`color: ${fontColor};`"
       @trigger="toggle"
@@ -62,7 +62,7 @@
           <address>
             <a
               href="mailto:georgia.young@example.com"
-              class="block mb-2 text-a11y-blue"
+              class="block mb-2 text-link"
             >
               {{ office.email }}
             </a>
@@ -88,7 +88,7 @@
             </button>
             <button
               type="button"
-              class="flex items-center px-2 py-3 text-a11y-red"
+              class="flex items-center px-2 py-3 text-error"
             >
               <svg-icon
                 name="trash"
