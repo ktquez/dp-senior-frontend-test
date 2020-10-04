@@ -31,8 +31,4 @@ describe('Icon', () => {
   test('Hidden for screen readers', () => {
     expect(wrapper.attributes('aria-hidden')).toBe('true')
   })
-
-  test('Render <svg-icon> correctly', () => {
-    expect(wrapper.classes('sprite-icon')).toBe(true)
-  })
 })
