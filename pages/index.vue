@@ -13,19 +13,29 @@
     </header>
     <main id="main">
       <ul>
-        <li>
-          <button
-            type="button"
-            class="flex justify-between w-full p-4 rounded-md bg-accent-red"
-          >
-            <span class="font-medium text-black">Add new location</span>
-            <svg-icon
-              name="plus"
-              aria-hidden="true"
-              focusable="false"
-              class="w-6 h-6"
+        <li class="relative w-full">
+          <TransitionSlideDown>
+            <button
+              v-show="!isFormOpen"
+              type="button"
+              class="w-full overflow-hidden rounded-md bg-accent-red"
+              @click="openOfficeForm({})"
+            >
+              <span class="flex justify-between px-6 py-4">
+                <span class="font-medium text-black">Add new location</span>
+                <Icon name="plus" />
+              </span>
+            </button>
+          </TransitionSlideDown>
+          <TransitionSlideDown>
+            <OfficeForm
+              v-if="currentOfficeForm"
+              class="overflow-hidden rounded-md"
+              :office="currentOfficeForm"
+              @on-save="persistOffice"
+              @on-close="closeOfficeForm"
             />
-          </button>
+          </TransitionSlideDown>
         </li>
         <li
           v-for="office in offices"
@@ -34,6 +44,7 @@
         >
           <OfficeCard
             :office="office"
+            @on-edit="openOfficeForm(office)"
             @on-delete="removeOffice(office)"
           />
         </li>
@@ -55,11 +66,12 @@
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, ref, watch } from '@nuxtjs/composition-api'
 
-import { useNotification, useOffices } from '@/composables'
+import { useNotification, useOffices, useDisclosure } from '@/composables'
 
 import OfficeCard from '@/components/OfficeCard'
+import OfficeForm from '@/components/OfficeForm'
 import Notification from '@/components/Notification'
 
 export default defineComponent({
@@ -67,6 +79,7 @@ export default defineComponent({
 
   components: {
     OfficeCard,
+    OfficeForm,
     Notification
   },
 
@@ -76,24 +89,36 @@ export default defineComponent({
 
   setup () {
     const heading = 'Offices'
-    const { offices, destroy, create, update } = useOffices()
+    const currentOfficeForm = ref(null)
+    const { offices, fetchOffices, destroy, create, update } = useOffices()
+    const { isOpen: isFormOpen, toggle: toggleForm } = useDisclosure()
     const { notification, setNotification, setErrorNotification } = useNotification()
 
-    function createOffice (office) {
-      try {
-        create(office)
-        setNotification({ message: `The location ${office.title} has been created successfully.` })
-      } catch (e) {
-        setErrorNotification(`Error creating the location ${office.title}.`)
-      }
+    const animateOfficeForm = cb => {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+      setTimeout(cb, 500)
     }
 
-    function updateOffice (office) {
+    function openOfficeForm (office) {
+      toggleForm()
+      animateOfficeForm(() => {
+        currentOfficeForm.value = office
+      })
+    }
+
+    function closeOfficeForm () {
+      currentOfficeForm.value = null
+      animateOfficeForm(toggleForm)
+    }
+
+    function persistOffice (office) {
+      const isEdit = office.id
       try {
-        update(office.id, office)
-        setNotification({ message: `The location ${office.title} has been updated.` })
+        isEdit ? update(office.id, office) : create(office)
+        setNotification({ message: `The location ${office.title} has been ${isEdit ? 'updated' : 'created successfully'}.` })
+        closeOfficeForm()
       } catch (e) {
-        setErrorNotification(`Error updating the location ${office.title}.`)
+        setErrorNotification(`Error ${isEdit ? 'updating' : 'creating'} the location ${office.title}.`)
       }
     }
 
@@ -106,15 +131,20 @@ export default defineComponent({
       }
     }
 
+    fetchOffices(7)
+
     return {
       create,
       update,
       heading,
       offices,
-      createOffice,
-      updateOffice,
+      isFormOpen,
+      openOfficeForm,
+      closeOfficeForm,
+      persistOffice,
       removeOffice,
-      notification
+      notification,
+      currentOfficeForm
     }
   }
 })

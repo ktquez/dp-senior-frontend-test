@@ -18,7 +18,7 @@ module.exports = {
         error: '#EB0027',
         primary: {
           gray: '#989EA7',
-          darkBlue: '#313E4F'
+          'dark-blue': '#313E4F'
         },
         accent: {
           blue: '#33A6BA',
