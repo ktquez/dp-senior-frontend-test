@@ -1,7 +1,7 @@
 import faker from 'faker'
 
 let id = 1
-const colors = ['bg-accent-blue', 'bg-accent-red', 'bg-accent-yellow', 'bg-primary-gray', 'bg-primary-darkBlue']
+export const colors = ['bg-accent-blue', 'bg-accent-red', 'bg-accent-yellow', 'bg-primary-gray', 'bg-primary-dark-blue']
 
 const officeSchema = {
   id: () => id,
