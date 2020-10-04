@@ -22,7 +22,9 @@ export default {
    * Plugins to load before mounting the App
    */
   plugins: [
-    '@/plugins/global'
+    '@/plugins/global',
+    // Doc: https://github.com/logaretm/vee-validate
+    '@/plugins/vee-validate'
   ],
 
   /*
