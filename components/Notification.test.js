@@ -12,7 +12,8 @@ beforeEach(() => {
       ...notification
     },
     stubs: {
-      'svg-icon': true
+      Icon: true,
+      TransitionSlideDown: true
     }
   })
 })
