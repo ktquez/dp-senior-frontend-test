@@ -21,7 +21,9 @@ export default {
   /*
    * Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: [
+    '@/plugins/global'
+  ],
 
   /*
    * Nuxt.js dev-modules
@@ -45,9 +47,11 @@ export default {
    * Build configuration
    */
   build: {
-    /*
-     * You can extend webpack config here
-     */
+    analyze: true,
+    transpile: [
+      // Doc: https://logaretm.github.io/vee-validate/guide/rules.html#importing-rules-in-nuxt-js
+      'vee-validate/dist/rules'
+    ],
     extend (config, ctx) {
     }
   }
