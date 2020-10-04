@@ -1,6 +1,7 @@
 import { ref } from '@nuxtjs/composition-api'
 
-export default function useNotification (timeout = 6000) {
+export default function useNotification (wait = 6000) {
+  let timeout = null
   const notification = ref({
     show: false,
     type: 'success',
@@ -9,9 +10,10 @@ export default function useNotification (timeout = 6000) {
 
   function setNotification (data) {
     notification.value = { ...notification.value, show: true, ...data }
-    setTimeout(() => {
+    clearTimeout(timeout)
+    timeout = setTimeout(() => {
       notification.value.show = false
-    }, timeout)
+    }, wait)
   }
 
   function setErrorNotification (message) {
