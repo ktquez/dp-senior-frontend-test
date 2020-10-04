@@ -14,7 +14,8 @@ beforeEach(() => {
       office
     },
     stubs: {
-      'svg-icon': true
+      Icon: true,
+      TransitionSlideDown: true
     }
   })
 })
