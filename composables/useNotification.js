@@ -8,16 +8,21 @@ export default function useNotification (wait = 6000) {
     message: ''
   })
 
-  function setNotification (data) {
-    notification.value = { ...notification.value, show: true, ...data }
+  function handleDisplayNotification () {
     clearTimeout(timeout)
     timeout = setTimeout(() => {
       notification.value.show = false
     }, wait)
   }
 
+  function setNotification (data) {
+    notification.value = { ...notification.value, show: true, ...data }
+    handleDisplayNotification()
+  }
+
   function setErrorNotification (message) {
-    notification.value = { ...notification.value, type: 'error', message }
+    notification.value = { ...notification.value, show: true, type: 'error', message }
+    handleDisplayNotification()
   }
 
   return {
