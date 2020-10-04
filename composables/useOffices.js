@@ -2,11 +2,7 @@ import { ref } from '@nuxtjs/composition-api'
 import makeOffices from '@/data/offices.js'
 
 export default function useOffices (numberItems = 6) {
-  const offices = ref([])
-
-  function fetch (numberItems = 6) {
-    offices.value = [...makeOffices(numberItems)]
-  }
+  const offices = ref([...makeOffices(numberItems)])
 
   function create (data) {
     offices.value = [...data, ...offices.value]

@@ -1,6 +1,12 @@
 <template>
   <div class="w-full max-w-xs py-24 mx-auto">
-    <header class="mb-10 text-center">
+    <div
+      aria-live="assertive"
+      aria-atomic="true"
+    >
+      <Notification v-bind="notification" />
+    </div>
+    <header class="my-10 text-center">
       <h1 class="text-6xl font-light text-link">
         Offices
       </h1>
@@ -26,7 +32,10 @@
           :key="`office-${office.id}`"
           class="mt-6 last:mt-0"
         >
-          <OfficeCard :office="office" />
+          <OfficeCard
+            :office="office"
+            @on-delete="removeOffice(office)"
+          />
         </li>
       </ul>
     </main>
@@ -46,17 +55,19 @@
 </template>
 
 <script>
-import { defineComponent, useAsync } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 
-import useOffices from '@/composables/useOffices'
+import { useNotification, useOffices } from '@/composables'
 
 import OfficeCard from '@/components/OfficeCard'
+import Notification from '@/components/Notification'
 
 export default defineComponent({
   name: 'Offices',
 
   components: {
-    OfficeCard
+    OfficeCard,
+    Notification
   },
 
   head: {
@@ -65,13 +76,46 @@ export default defineComponent({
 
   setup () {
     const heading = 'Offices'
-    const offices = useAsync(async () => {
-      const { offices, fetch } = await useOffices()
-      await fetch(7)
-      return offices.value
-    })
+    const { offices, destroy, create, update } = useOffices()
+    const { notification, setNotification, setErrorNotification } = useNotification()
 
-    return { heading, offices }
+    function createOffice (office) {
+      try {
+        create(office)
+        setNotification({ message: `The location ${office.title} has been created successfully.` })
+      } catch (e) {
+        setErrorNotification(`Error creating the location ${office.title}.`)
+      }
+    }
+
+    function updateOffice (office) {
+      try {
+        update(office.id, office)
+        setNotification({ message: `The location ${office.title} has been updated.` })
+      } catch (e) {
+        setErrorNotification(`Error updating the location ${office.title}.`)
+      }
+    }
+
+    function removeOffice (office) {
+      try {
+        destroy(office.id)
+        setNotification({ message: `The location ${office.title} has been deleted.` })
+      } catch (e) {
+        setErrorNotification(`Error deleting the location ${office.title}.`)
+      }
+    }
+
+    return {
+      create,
+      update,
+      heading,
+      offices,
+      createOffice,
+      updateOffice,
+      removeOffice,
+      notification
+    }
   }
 })
 </script>
