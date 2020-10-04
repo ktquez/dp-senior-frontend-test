@@ -10,7 +10,7 @@ const officeSchema = {
   fullName: () => (faker.fake('{{name.findName}}')),
   jobPosition: () => (faker.fake('{{name.jobTitle}}')),
   email: () => (faker.fake('{{internet.email}}')),
-  phone: () => (faker.fake('{{phone.phoneNumberFormat}}')),
+  phone: () => (faker.phone.phoneNumber('(###) ###-###')),
   color: () => (colors[(Math.floor(Math.random() * colors.length) + 0)])
 }
 
