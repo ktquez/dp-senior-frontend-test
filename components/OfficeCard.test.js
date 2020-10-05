@@ -1,14 +1,13 @@
 import { shallowMount } from '@vue/test-utils'
-import makeOffices from '@/data/offices'
+import { officesData } from '@/data/offices'
 
 import OfficeCard from './OfficeCard'
 
-const offices = makeOffices()
 let wrapper = null
 let office = null
 
 beforeEach(() => {
-  office = offices[0]
+  office = officesData[0]
   wrapper = shallowMount(OfficeCard, {
     propsData: {
       office

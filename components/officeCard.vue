@@ -69,6 +69,7 @@
             <button
               type="button"
               class="flex items-center px-2 py-3"
+              data-test="edit-button"
               :aria-labelledby="`edit-button-${office.id} officeTitle-${office.id}`"
               @click="$emit('on-edit') && toggle()"
             >
@@ -83,6 +84,7 @@
             <button
               type="button"
               class="flex items-center px-2 py-3 text-error"
+              data-test="delete-button"
               :aria-labelledby="`delete-button-${office.id} officeTitle-${office.id}`"
               @click="modalToggle"
             >
@@ -111,12 +113,14 @@
       <template #footer>
         <button
           class="px-4 py-2 font-medium bg-gray-300 border border-gray-500 rounded-md"
+          data-test="cancel-button-dialog"
           @click="modalToggle"
         >
           Cancel
         </button>
         <button
           class="px-4 py-2 ml-4 font-medium text-black rounded-md bg-accent-red"
+          data-test="delete-button-dialog"
           @click="deleteOffice"
         >
           Delete
@@ -131,16 +135,13 @@ import { defineComponent, onMounted, ref, watch } from '@nuxtjs/composition-api'
 import { useDisclosure, useColorContrast } from '@/composables'
 import { programmaticFocus } from '@/utils'
 
-import { FocusLoop } from '@vue-a11y/focus-loop'
-import Modal from '@/components/Modal'
 import WrapperCard from '@/components/WrapperCard'
 
 export default defineComponent({
   name: 'OfficeCard',
 
   components: {
-    Modal,
-    FocusLoop,
+    Modal: () => import(/* webpackChunkName: "Modal" */ '@/components/Modal'),
     WrapperCard
   },
 

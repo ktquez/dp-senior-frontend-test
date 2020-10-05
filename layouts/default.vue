@@ -1,5 +1,7 @@
 <template>
-  <nuxt />
+  <div class="mx-4 sm:mx-0">
+    <nuxt />
+  </div>
 </template>
 
 <style>

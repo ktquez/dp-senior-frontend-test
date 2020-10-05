@@ -1,15 +1,10 @@
 import { ref } from '@nuxtjs/composition-api'
-import makeOffices, { colors } from '@/data/offices.js'
+import { officesData, colors } from '@/data/offices.js'
 
 export default function useOffices () {
-  const id = ref(0)
-  const offices = ref([])
+  const offices = ref([...officesData])
+  const id = ref(offices.value.length)
   const officeColors = colors
-
-  function fetchOffices (numberItems = 6) {
-    offices.value = [...makeOffices(numberItems)]
-    id.value = offices.value.length
-  }
 
   function create (data) {
     ++id.value
@@ -34,7 +29,6 @@ export default function useOffices () {
     update,
     destroy,
     offices,
-    officeColors,
-    fetchOffices
+    officeColors
   }
 }

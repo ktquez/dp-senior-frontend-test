@@ -8,45 +8,37 @@
     </div>
     <header class="my-10 text-center">
       <h1 class="text-6xl font-light text-link">
-        Offices
+        {{ heading }}
       </h1>
     </header>
     <main id="main">
-      <ul>
-        <li class="relative w-full">
-          <TransitionSlideDown>
-            <button
-              v-show="!isFormOpen"
-              type="button"
-              class="w-full overflow-hidden rounded-md bg-accent-red"
-              @click="openOfficeForm({})"
-            >
-              <span class="flex justify-between px-6 py-4">
-                <span class="font-medium text-black">Add new location</span>
-                <Icon name="plus" />
-              </span>
-            </button>
-          </TransitionSlideDown>
+      <NewLocation @on-save="persistOffice" />
+      <ul
+        ref="listOffices"
+        data-test="offices-list"
+      >
+        <li
+          v-for="office in offices"
+          :id="`office-item-${office.id}`"
+          :key="`office-${office.id}`"
+          class="mt-6 last:mt-0"
+        >
+          <div class="w-full overflow-hidden rounded-md">
+            <OfficeCard
+              :office="office"
+              @on-edit="openOfficeForm(office, `#office-item-${office.id}`)"
+              @on-delete="removeOffice(office)"
+            />
+          </div>
           <TransitionSlideDown>
             <OfficeForm
-              v-if="currentOfficeForm"
-              class="overflow-hidden rounded-md"
+              v-if="currentOfficeForm && currentOfficeForm.id === office.id"
+              class="mt-6 overflow-hidden rounded-md"
               :office="currentOfficeForm"
               @on-save="persistOffice"
               @on-close="closeOfficeForm"
             />
           </TransitionSlideDown>
-        </li>
-        <li
-          v-for="office in offices"
-          :key="`office-${office.id}`"
-          class="mt-6 last:mt-0"
-        >
-          <OfficeCard
-            :office="office"
-            @on-edit="openOfficeForm(office)"
-            @on-delete="removeOffice(office)"
-          />
         </li>
       </ul>
     </main>
@@ -66,50 +58,29 @@
 </template>
 
 <script>
-import { defineComponent, ref, watch } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 
-import { useNotification, useOffices, useDisclosure } from '@/composables'
-
-import OfficeCard from '@/components/OfficeCard'
-import OfficeForm from '@/components/OfficeForm'
-import Notification from '@/components/Notification'
+import { useNotification, useOffices, useOfficeForm } from '@/composables'
 
 export default defineComponent({
   name: 'Offices',
 
   components: {
-    OfficeCard,
-    OfficeForm,
-    Notification
+    OfficeCard: () => import(/* webpackChunkName: "OfficeCard" */ '@/components/OfficeCard'),
+    OfficeForm: () => import(/* webpackChunkName: "OfficeForm" */ '@/components/OfficeForm'),
+    NewLocation: () => import(/* webpackChunkName: "NewLocation" */ '@/components/NewLocation'),
+    Notification: () => import(/* webpackChunkName: "Notification" */ '@/components/Notification')
   },
 
   head: {
     title: 'Offices | Senior frontend test'
   },
 
-  setup () {
+  setup (_, { refs }) {
     const heading = 'Offices'
-    const currentOfficeForm = ref(null)
-    const { offices, fetchOffices, destroy, create, update } = useOffices()
-    const { isOpen: isFormOpen, toggle: toggleForm } = useDisclosure()
+    const { offices, destroy, create, update } = useOffices()
+    const { openOfficeForm, closeOfficeForm, currentOfficeForm } = useOfficeForm()
     const { notification, setNotification, setErrorNotification } = useNotification()
-
-    const animateOfficeForm = cb => {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-      setTimeout(cb, 500)
-    }
-
-    function openOfficeForm (office) {
-      toggleForm()
-      animateOfficeForm(() => {
-        currentOfficeForm.value = office
-      })
-    }
-
-    function closeOfficeForm () {
-      currentOfficeForm.value = null
-      animateOfficeForm(toggleForm)
-    }
 
     function persistOffice (office) {
       const isEdit = office.id
@@ -125,25 +96,21 @@ export default defineComponent({
     function removeOffice (office) {
       try {
         destroy(office.id)
+        scrollTo({ top: 0, behavior: 'smooth' })
         setNotification({ message: `The location ${office.title} has been deleted.` })
       } catch (e) {
         setErrorNotification(`Error deleting the location ${office.title}.`)
       }
     }
 
-    fetchOffices(7)
-
     return {
-      create,
-      update,
       heading,
       offices,
-      isFormOpen,
-      openOfficeForm,
-      closeOfficeForm,
-      persistOffice,
       removeOffice,
       notification,
+      persistOffice,
+      openOfficeForm,
+      closeOfficeForm,
       currentOfficeForm
     }
   }

@@ -3,10 +3,8 @@
     :name="name"
     aria-hidden="true"
     focusable="false"
-    :class="[
-      `w-${size}`,
-      `h-${size}`
-    ]"
+    :width="width"
+    :height="height"
   />
 </template>
 
@@ -19,9 +17,13 @@ export default {
       type: String,
       required: true
     },
-    size: {
-      type: [Number, String],
-      default: 6
+    width: {
+      type: String,
+      default: '24px'
+    },
+    height: {
+      type: String,
+      default: '24px'
     }
   }
 }

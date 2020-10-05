@@ -19,6 +19,7 @@
             </h2>
             <button
               type="button"
+              data-test="close-button"
               class="p-2 -mr-2"
               aria-labelledby="office-form-close office-form-title"
               @click="$emit('on-close')"
@@ -53,7 +54,8 @@
                 <span v-show="!isColorsOpen">Select color</span>
                 <Icon
                   name="arrow-down"
-                  size="4"
+                  width="16px"
+                  height="16px"
                   class="ml-2"
                   :class="{
                     'transform rotate-180': isColorsOpen
@@ -85,7 +87,8 @@
                         </span>
                         <Icon
                           v-if="color === _office.color"
-                          size="8"
+                          width="32px"
+                          height="32px"
                           class="absolute flex items-center justify-center"
                           name="success"
                         />
@@ -285,9 +288,9 @@ export default {
   name: 'OfficeForm',
 
   components: {
+    FocusLoop,
     FormInput,
     FormLabel,
-    FocusLoop,
     FormErrorMessage,
     FormObserveValidate,
     FormControlValidate

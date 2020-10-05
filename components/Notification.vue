@@ -3,7 +3,7 @@
     <div
       v-show="show"
       data-test="notification"
-      class="fixed top-0 left-0 z-20 w-full overflow-hidden bg-white"
+      class="fixed top-0 left-0 z-20 w-full px-4 overflow-hidden bg-white sm:px-0"
     >
       <div class="flex items-center justify-center py-8">
         <Icon
