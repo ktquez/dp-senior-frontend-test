@@ -1,4 +1,7 @@
 module.exports = {
+  setupFiles: [
+    '<rootDir>/tests/unit/init.js'
+  ],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/$1',
     '@nuxtjs/composition-api': '@nuxtjs/composition-api/lib/cjs/entrypoint.js'
