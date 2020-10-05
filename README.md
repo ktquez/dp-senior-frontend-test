@@ -159,6 +159,8 @@ The test project strives to be compatible with AA [WCAG](https://www.w3.org/WAI/
 ##### Solution
 I added a cursor of type `not-allowed` to simulate disabled button + Validation if any field is still invalid.
 
+--
+
 #### Masks in inputs are inaccessible
 Screen reader users report accessibility issues and that it can take the form unusable with VoiceOver or JAWS.
 
