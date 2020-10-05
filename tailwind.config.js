@@ -1,9 +1,15 @@
 const plugin = require('tailwindcss/plugin')
+const { colors } = require('./data/offices')
 
 module.exports = {
   purge: {
     enabled: process.env.NODE_ENV === 'production',
-    content: ['./**/*.vue']
+    content: ['./**/*.vue'],
+    options: {
+      whitelist: [
+        ...colors
+      ]
+    }
   },
   future: {
     purgeLayersByDefault: true,
