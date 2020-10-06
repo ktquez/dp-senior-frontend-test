@@ -86,8 +86,8 @@ export default defineComponent({
       const isEdit = office.id
       try {
         isEdit ? update(office.id, office) : create(office)
-        setNotification({ message: `The location ${office.title} has been ${isEdit ? 'updated' : 'created successfully'}.` })
         closeOfficeForm()
+        setTimeout(() => setNotification({ message: `The location ${office.title} has been ${isEdit ? 'updated' : 'created successfully'}.` }), 700)
       } catch (e) {
         setErrorNotification(`Error ${isEdit ? 'updating' : 'creating'} the location ${office.title}.`)
       }
@@ -97,7 +97,7 @@ export default defineComponent({
       try {
         destroy(office.id)
         scrollTo({ top: 0, behavior: 'smooth' })
-        setNotification({ message: `The location ${office.title} has been deleted.` })
+        setTimeout(() => setNotification({ message: `The location ${office.title} has been deleted.` }), 700)
       } catch (e) {
         setErrorNotification(`Error deleting the location ${office.title}.`)
       }
