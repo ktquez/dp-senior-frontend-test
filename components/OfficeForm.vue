@@ -33,7 +33,7 @@
               <Icon name="close" />
             </button>
           </div>
-          <fieldset class="flex flex-wrap">
+          <fieldset>
             <legend class="sr-only">
               Office information
             </legend>
@@ -154,7 +154,7 @@
               <FormErrorMessage :errors="errors" />
             </FormControlValidate>
           </fieldset>
-          <fieldset class="flex flex-wrap mt-4">
+          <fieldset class="mt-4">
             <legend class="text-sm uppercase text-link">
               Contact information
             </legend>
